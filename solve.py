@@ -2,6 +2,7 @@ import numpy as np
 from scipy import optimize
 import markov_decision_process
 import policies
+import gridworld
 
 
 def reward_matrix_to_vector(mdp: markov_decision_process.MDP, reward_matrix: np.ndarray):
@@ -72,7 +73,6 @@ def solve_discounted(mdp: markov_decision_process.MDP, reward: np.ndarray, disco
 
 
 def _profile():
-    from environments.tabularv2 import gridworld
     from timeit import default_timer as timer
 
     discount_factor = 0.99
