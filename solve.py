@@ -32,6 +32,12 @@ def evaluate_discounted_q(mdp: markov_decision_process.MDP, policy: policies.Pol
                            discount_factor * (mdp.T @ policy.E()), reward)
 
 
+def evaluate_discounted_v(mdp: markov_decision_process.MDP, policy: policies.Policy, reward: np.ndarray,
+                          discount_factor: float) -> np.ndarray:
+    return np.linalg.solve(np.eye(mdp.num_states, mdp.num_states) - discount_factor * (policy.E() @ mdp.T),
+                           policy.E() @ reward) * discount_factor
+
+
 def policy_iteration_discounted(mdp: markov_decision_process.MDP, reward: np.ndarray, discount_factor: float) -> \
         policies.Policy:
     policy = policies.Policy(np.ones((mdp.num_states, mdp.num_actions)) / mdp.num_actions)
@@ -51,7 +57,7 @@ def value_iteration_discounted(mdp: markov_decision_process.MDP, reward: np.ndar
                                precision: float=1e-9):
     reward = reward.reshape((mdp.num_states, mdp.num_actions))
     value = np.max(reward, axis=1)
-    max_diff = np.float('inf')
+    max_diff = np.inf
     while max_diff > precision * (1 - discount_factor)/(2 * discount_factor):
         q_value = reward + discount_factor * (mdp.T @ value).reshape(mdp.num_states, mdp.num_actions)
         new_value = np.max(q_value, axis=1)
