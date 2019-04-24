@@ -1,6 +1,7 @@
 import numpy as np
 from scipy import optimize
 import markov_decision_process
+import markov_chain
 import policies
 import gridworld
 
@@ -28,14 +29,21 @@ def discounted_dual_linprog(mdp: markov_decision_process.MDP, reward: np.ndarray
 
 def evaluate_discounted_q(mdp: markov_decision_process.MDP, policy: policies.Policy, reward: np.ndarray,
                           discount_factor: float) -> np.ndarray:
-    return np.linalg.solve(np.eye(mdp.num_states * mdp.num_actions, mdp.num_states * mdp.num_actions) -
-                           discount_factor * (mdp.T @ policy.E()), reward)
+
+    return evaluate_discounted_chain_value(mdp.state_action_process(policy), reward, discount_factor)
+    #return np.linalg.solve(np.eye(mdp.num_states * mdp.num_actions, mdp.num_states * mdp.num_actions) -
+                           #discount_factor * (mdp.T @ policy.E()), reward)
 
 
 def evaluate_discounted_v(mdp: markov_decision_process.MDP, policy: policies.Policy, reward: np.ndarray,
                           discount_factor: float) -> np.ndarray:
-    return np.linalg.solve(np.eye(mdp.num_states, mdp.num_states) - discount_factor * (policy.E() @ mdp.T),
-                           policy.E() @ reward) * discount_factor
+    return evaluate_discounted_chain_value(mdp.state_process(policy), policy.E() @ reward, discount_factor)
+
+
+def evaluate_discounted_chain_value(chain: markov_chain.MarkovChain, reward: np.ndarray,
+                                    discount_factor: float) -> np.ndarray:
+    return np.linalg.solve(np.eye(chain.num_states, chain.num_states) - discount_factor * chain.T, reward) * \
+           discount_factor
 
 
 def policy_iteration_discounted(mdp: markov_decision_process.MDP, reward: np.ndarray, discount_factor: float) -> \

@@ -37,3 +37,7 @@ class MarkovChain:
         :return: transition matrix |X|x|X|
         """
         return self.transition_matrix
+
+    @property
+    def num_states(self):
+        return self.transition_matrix.shape[0]
