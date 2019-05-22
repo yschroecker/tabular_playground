@@ -42,8 +42,7 @@ def evaluate_discounted_v(mdp: markov_decision_process.MDP, policy: policies.Pol
 
 def evaluate_discounted_chain_value(chain: markov_chain.MarkovChain, reward: np.ndarray,
                                     discount_factor: float) -> np.ndarray:
-    return np.linalg.solve(np.eye(chain.num_states, chain.num_states) - discount_factor * chain.T, reward) * \
-           discount_factor
+    return np.linalg.solve(np.eye(chain.num_states, chain.num_states) - discount_factor * chain.T, reward)
 
 
 def policy_iteration_discounted(mdp: markov_decision_process.MDP, reward: np.ndarray, discount_factor: float) -> \

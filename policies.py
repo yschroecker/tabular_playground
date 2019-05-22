@@ -24,3 +24,6 @@ class Policy:
             selector[state, state*self.policy.shape[1]:(state+1)*self.policy.shape[1]] = self.policy[state, :]
         return selector
 
+    def sample(self, state_index: int) -> int:
+        return np.random.choice(self.policy.shape[1], p=self.policy[state_index])
+
