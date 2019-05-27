@@ -1,3 +1,5 @@
+from typing import Optional
+
 import gridworld
 import matplotlib.pyplot as plt
 from matplotlib import patches
@@ -21,8 +23,11 @@ def draw_grid(env: gridworld.Gridworld):
     return fig, ax
 
 
-def plot_value_grid(env: gridworld.Gridworld, value: np.ndarray):
-    normalized_value = (value - np.min(value))/(np.max(value) - np.min(value))
+def plot_value_grid(env: gridworld.Gridworld, value: np.ndarray, min_value: Optional[float], max_value: Optional[float]):
+    min_value = np.min(value) if min_value is None else min_value
+    max_value = np.max(value) if max_value is None else max_value
+    color_value = np.clip(value, min_value, max_value)
+    normalized_value = (color_value - min_value)/(max_value - min_value)
     plt.close(plt.gcf())
     fig = plt.figure()
     ax: plt.Axes = fig.gca()
