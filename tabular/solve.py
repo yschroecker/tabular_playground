@@ -28,8 +28,6 @@ def evaluate_discounted_q(mdp: markov_decision_process.MDP, policy: policies.Pol
                           discount_factor: float) -> np.ndarray:
 
     return evaluate_discounted_chain_value(mdp.state_action_process(policy), reward, discount_factor)
-    #return np.linalg.solve(np.eye(mdp.num_states * mdp.num_actions, mdp.num_states * mdp.num_actions) -
-                           #discount_factor * (mdp.T @ policy.E()), reward)
 
 
 def evaluate_discounted_v(mdp: markov_decision_process.MDP, policy: policies.Policy, reward: np.ndarray,
