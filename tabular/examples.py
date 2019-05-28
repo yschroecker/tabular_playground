@@ -4,10 +4,8 @@ import matplotlib.pyplot as plt
 from matplotlib import patches
 import numpy as np
 
-import gridworld
-import solve
-import environment
-from gridworld import W, G, S
+from tabular import solve, gridworld, environment
+from tabular.gridworld import W, G, S
 
 
 def draw_grid(env: gridworld.Gridworld):

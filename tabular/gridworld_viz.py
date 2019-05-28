@@ -1,6 +1,6 @@
 from typing import Optional
 
-import gridworld
+from tabular import gridworld
 import matplotlib.pyplot as plt
 from matplotlib import patches
 import numpy as np

@@ -1,6 +1,5 @@
 from typing import Optional, Tuple, Any
-import markov_decision_process
-import policies
+from tabular import markov_decision_process, policies
 import numpy as np
 import collections
 

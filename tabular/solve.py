@@ -1,9 +1,6 @@
 import numpy as np
 from scipy import optimize
-import markov_decision_process
-import markov_chain
-import policies
-import gridworld
+from tabular import markov_chain, markov_decision_process, policies, gridworld
 
 
 def reward_matrix_to_vector(mdp: markov_decision_process.MDP, reward_matrix: np.ndarray):
@@ -24,7 +21,7 @@ def discounted_dual_linprog(mdp: markov_decision_process.MDP, reward: np.ndarray
         method='interior-point'
     ).x
     decision_variables = decision_variables.reshape(mdp.num_states, mdp.num_actions)
-    return policies.Policy(decision_variables/decision_variables.sum(axis=1, keepdims=True))
+    return policies.Policy(decision_variables / decision_variables.sum(axis=1, keepdims=True))
 
 
 def evaluate_discounted_q(mdp: markov_decision_process.MDP, policy: policies.Policy, reward: np.ndarray,

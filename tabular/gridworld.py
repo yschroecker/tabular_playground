@@ -1,8 +1,7 @@
 from typing import Tuple, Union
 
 import numpy as np
-import markov_decision_process
-
+from tabular import markov_decision_process
 
 G = 1
 S = 2

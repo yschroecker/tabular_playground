@@ -1,6 +1,6 @@
 from typing import Tuple
 import numpy as np
-import markov_chain, policies
+from tabular import markov_chain, policies
 
 
 class MDP:
